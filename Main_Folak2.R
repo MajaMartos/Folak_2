@@ -27,19 +27,10 @@ library(knitr)
 ## Fix formating and remove wrong values like 999
 source("clean_all_predictors.R")
 combined.dataset <- clean_all_predictors(combined.dataset)
+
+## clean Audit filters
 source("clean_audit_filters.R")
-## clean Audit filters
 combined.dataset <- clean_audit_filters(combined.dataset)
-
-# Clean data 
-source("clean_all_predictors.R")
-
-
-## clean Audit filters
-combined.dataset <- clean_audit_filters(combined.dataset)
-
-# Clean data 
-source("clean_all_predictors.R")
 
 
 ## Separate and store cases without unknown outcome (OFI)
@@ -47,8 +38,7 @@ missing.outcome <- is.na(combined.dataset$ofi)
 combined.dataset <- combined.dataset[!missing.outcome,]
 
 ## remove patients < 15 years
-#combined.dataset <- combined.dataset[combined.dataset$pt_age_yrs > 14,]
-
+combined.dataset <- combined.dataset[combined.dataset$pt_age_yrs > 14,]
 
 
 ## Create cohorts 
@@ -106,13 +96,14 @@ source("table1_folak2.R")
 
 
 # Regression model 
+source("Regression.R")
 
 # create binom outcome variable  
-new.dataset$Judgement_error <- new.dataset %>%
+#new.dataset$Judgement_error <- new.dataset %>%
   mutate(OFI_categories = ifelse(OFI_categories != "Clinical judgement error", "No clinical judgement error", cohort))
 
 ## create dataset with only BM without TBI
-bm_without_tbi <- subset(new.dataset, cohort == "blunt multisystem without TB")
+#bm_without_tbi <- subset(new.dataset, cohort == "blunt multisystem without TB")
 
 
 
