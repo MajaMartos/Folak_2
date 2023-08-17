@@ -1,6 +1,6 @@
 #Merge data 
 library(rofi)
-data <- rofi::import_data()
+data <- import_data()
 names <- c("swetrau","fmp","atgarder","problem","kvalgranskning2014.2017")
 names(data) <- names
 combined.dataset <- rofi::merge_data(data)
@@ -84,15 +84,21 @@ new.dataset$OFI_categories <- ifelse(new.dataset$Problemomrade_.FMP %in% c("Hand
 
 
 # create binom outcome variable  
-new.dataset$Judgement_error <- new.dataset %>%
-  mutate(OFI_categories = ifelse(OFI_categories != "Clinical judgement error", "No clinical judgement error", cohort))
+new.dataset$Judgement_error <- ifelse(new.dataset$OFI_categories != "Clinical judgement error", "No clinical judgement error", "Judgement error")
 
 
 ##  Format columns for table1
-source("Format_table_folak2.R")
+source("Format_table.R")
+new.dataset <- format_data(new.dataset)
 
+## create dataset with only BM without TBI
+bm_without_tbi <- subset(new.dataset, cohort == "blunt multisystem without TBI")
+bm_without_tbi <- bm_without_tbi[, c("Judgement_error", "pt_Gender", "res_survival", "pt_age_yrs", "ed_sbp_value", "ed_rr_value", "ed_gcs_sum", "ISS", "resuscitation.procedures")]
+bm_without_tbi <- copy_labels_from(bm_without_tbi, new.dataset)
+
+tbl_summary(bm_without_tbi, by = "Judgement_error")
 ## Create table1 
-source("table1_folak2.R")
+## source("table1_folak2.R")
 
 
 # Regression model 

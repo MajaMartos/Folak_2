@@ -1,5 +1,5 @@
 library("labelled")
-format_table1 <- function(data) {
+format_data <- function(data) {
   
   ## "res_survival"
   data$res_survival <- factor(
@@ -93,7 +93,7 @@ format_table1 <- function(data) {
   
   #"intub"  
   data$intub <- factor(
-    dpc$intub,
+    data$intub,
     levels = c(1, 2, 3),
     labels = c("Inhospital", "Not intubated", "Prehospital"))
   
@@ -106,18 +106,6 @@ format_table1 <- function(data) {
                "Surgical ward",
                "Specialist ward/Intermediate ward",
                "Intensive care unit"))
-  
-  #"pt_Gender"              
-  data$pt_Gender <- factor(
-    data$pt_Gender,
-    levels = c(2, 1),
-    labels = c("Female", "Male"))
-  
-  # "res_survival"
-  data$res_survival <- factor(
-    data$res_survival,
-    levels = c(1, 2),     
-    labels = c("Yes", "No"))
   
   # "ofi" 
   data$ofi <- factor(
