@@ -9,6 +9,7 @@ combined.dataset <- rofi::merge_data(data)
 combined.dataset$ofi <- rofi::create_ofi(combined.dataset)
 
 #packages 
+library(noacsr)
 library(dplyr)
 library(ggplot2)
 library(gtsummary)
@@ -94,18 +95,16 @@ source("Format_table_folak2.R")
 source("table1_folak2.R")
 
 
-
 # Regression model 
 source("Regression.R")
 
 # create binom outcome variable  
 #new.dataset$Judgement_error <- new.dataset %>%
-  mutate(OFI_categories = ifelse(OFI_categories != "Clinical judgement error", "No clinical judgement error", cohort))
+  
+#mutate(OFI_categories = ifelse(OFI_categories != "Clinical judgement error", "No clinical judgement error", cohort))
 
 ## create dataset with only BM without TBI
 #bm_without_tbi <- subset(new.dataset, cohort == "blunt multisystem without TB")
-
-
 
 
 
