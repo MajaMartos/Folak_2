@@ -8,7 +8,10 @@ model1.table <- (tbl_regression(model1, exponentiate = TRUE))
 ##create model 2
 model2 <- glm(Judgement_error == "Judgement error" ~ pt_Gender + res_survival + pt_age_yrs + ed_sbp_value + ed_rr_value + ed_gcs_sum + ISS, data = bm_without_tbi, family = binomial())
 model2.table <- (tbl_regression(model2, exponentiate = TRUE))
-
+model2.table<- as_kable(model2.table, format = "pandoc")
+saveRDS(model2.table," model2.table.Rds")
+write(model2.table, "model2.table.Rmd")
+rmarkdown::render("model2.table.Rmd", output_format = "word_document")
 
 ##create model 3
 model3 <- glm(Judgement_error == "Judgement error" ~ pt_Gender + res_survival + pt_age_yrs + ed_sbp_value + ed_rr_value + ed_gcs_sum + ISS + resuscitation.procedures, data = bm_without_tbi, family = binomial())
